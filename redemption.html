@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burgers4U - Redeem Your Voucher</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js?v=8" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Body styling */
+        body {
+            background-color: #333; /* Same color as the share button */
+            color: #fff; /* White text for contrast */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Content container styling */
+        .content-container {
+            max-width: 800px;
+            margin: 20px auto; /* Center the content container with margin */
+            padding: 20px;
+            background-color: #333; /* Same color as the menu */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            margin-left: 10px;  /* Add small margins on the sides */
+            margin-right: 10px;
+        }
+
+        /* Logo styling */
+        .logo {
+            width: 200px;
+            margin: 20px auto;
+        }
+
+        /* Deal image styling */
+        .deal-image {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            border-radius: 20px; /* Rounded corners */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid white; /* White border */
+        }
+
+        /* Voucher input and button styling */
+        .voucher-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .voucher-input {
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid white;
+            font-size: 16px;
+            width: 200px;
+            margin-right: 10px;
+            color: #333;
+        }
+
+        .apply-button {
+            background-color: #ffcc00;
+            color: #333;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Bottom menu styling */
+        .bottom-menu {
+            display: flex;
+            justify-content: space-around;
+            background-color: #333;
+            padding: 15px 0; /* Increased padding for more height */
+            color: white;
+            font-size: 25px; /* Adjust font size for larger icons */
+            border-top: 1.5px solid white; /* White border */
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 500; /* Ensure it appears above other content, but below floating button */
+            align-items: center; /* Center the icons vertically */
+            height: 50px; /* Set a fixed height for the menu */
+        }
+
+        .bottom-menu i {
+            color: white;
+            cursor: pointer;
+            margin: 0; /* Remove any default margin */
+            line-height: 1; /* Ensure line-height is reset */
+        }
+
+        .bottom-menu i:hover {
+            color: #ffcc00; /* Change color on hover */
+        }
+
+        /* CSS to make the paragraph text slightly bigger */
+        .large-text {
+            font-size: 1.2em; /* Adjust as needed for desired size */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Content container -->
+    <div class="content-container">
+
+        <!-- Logo -->
+        <img src="Burgers4ULogo.png" alt="Burgers4U Logo" class="logo">
+
+        <h2>Redeem Your Voucher</h2>
+        <p class="large-text">Enjoy your exclusive deal by applying your voucher code below!</p>
+        
+        <!-- Deal Image -->
+        <img src="https://files.sbsdev.co/Burgers4UVoucherDeal1.png" alt="Deal Image" class="deal-image">
+
+        <!-- Voucher Input and Button -->
+        <div class="voucher-container">
+            <input type="text" id="voucher-code" class="voucher-input" placeholder="Enter Voucher Code">
+            <button class="apply-button" onclick="applyVoucher()">Apply</button>
+        </div>
+
+        <!-- Footer with dynamic copyright -->
+        <footer>
+            <p>&copy; <span id="current-year"></span> Burgers4U. All rights reserved.</p>
+        </footer>
+
+    </div>
+
+    <!-- Bottom menu -->
+    <div class="bottom-menu">
+        <i class="fa fa-home" title="Home" onclick="navigateToHome()"></i>
+        <i class="fa fa-wallet" title="Wallet" onclick="navigateToWallet()"></i>
+        <i class="fa fa-shopping-cart" title="Order" onclick="navigateToOrder()"></i>
+    </div>
+
+    <script>
+        // Function to get the vc parameter from the URL and populate the voucher input
+        function getVoucherCodeFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const voucherCode = urlParams.get('vc');
+            if (voucherCode) {
+                document.getElementById('voucher-code').value = voucherCode;
+            }
+        }
+
+        // Function to handle voucher application
+        function applyVoucher() {
+            const voucherCode = document.getElementById('voucher-code').value;
+            if (voucherCode) {
+                sendPushMessageToServiceWorker("Thank you 👍", `Your voucher code ${voucherCode} has been successfully applied.`, "index.html?voucherRedeemed=true");
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Please enter a valid voucher code.',
+                    icon: 'error',
+                    confirmButtonColor: '#ffcc00',
+                    background: '#333',  // Dark background to match the page
+                    color: '#fff',        // White text for contrast
+                });
+            }
+        }
+
+        // Update the copyright year dynamically
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Populate voucher code on page load
+        window.onload = function() {
+            getVoucherCodeFromURL();
+        };
+
+        // Navigation functions
+        function navigateToHome() {
+            window.location.href = 'index.html'; // Update this URL to your actual home page
+        }
+
+        function navigateToWallet() {
+            window.location.href = 'wallet.html'; // Update this URL to your wallet page
+        }
+
+        function navigateToOrder() {
+            window.location.href = 'order.html'; // Update this URL to your order page
+        }
+    </script>
+</body>
+</html>

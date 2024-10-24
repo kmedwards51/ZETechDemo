@@ -1,0 +1,109 @@
+{
+    "name": "Burgers4U - The Ultimate Burger Experience",
+    "short_name": "Burgers4U",
+    "description": "Burgers4U offers the best deals on mouthwatering burgers. Enjoy our wide range of delicious burgers, exclusive deals, and easy ordering experience. Your ultimate destination for burger cravings!",
+    "theme_color": "#333333",
+    "background_color": "#333333",
+    "display": "standalone",
+    "orientation": "portrait",
+    "scope": "/",
+    "start_url": "/?source=pwa",
+    "related_applications": [
+      {
+        "platform": "play",
+        "url": "https://play.google.com/store/apps/details?id=com.burgers4u.app",
+        "id": "com.burgers4u.app"
+      },
+      {
+        "platform": "itunes",
+        "url": "https://apps.apple.com/app/id1234567890"
+      }
+    ],
+    "prefer_related_applications": false,
+    "categories": ["food", "shopping", "lifestyle"],
+    "lang": "en-US",
+    "dir": "ltr",
+    "screenshots": [
+      {
+        "src": "images/screenshots/screenshot1.png",
+        "sizes": "640x1136",
+        "type": "image/png"
+      },
+      {
+        "src": "images/screenshots/screenshot2.png",
+        "sizes": "750x1334",
+        "type": "image/png"
+      }
+    ],
+    "icons": [
+      {
+        "src": "images/icon/icon-72x72.png",
+        "sizes": "72x72",
+        "type": "image/png"
+      },
+      {
+        "src": "images/icon/icon-96x96.png",
+        "sizes": "96x96",
+        "type": "image/png"
+      },
+      {
+        "src": "images/icon/icon-128x128.png",
+        "sizes": "128x128",
+        "type": "image/png"
+      },
+      {
+        "src": "images/icon/icon-144x144.png",
+        "sizes": "144x144",
+        "type": "image/png"
+      },
+      {
+        "src": "images/icon/icon-152x152.png",
+        "sizes": "152x152",
+        "type": "image/png"
+      },
+      {
+        "src": "images/icon/icon-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "images/icon/icon-384x384.png",
+        "sizes": "384x384",
+        "type": "image/png"
+      },
+      {
+        "src": "images/icon/icon-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "shortcuts": [
+      {
+        "name": "Order Now",
+        "short_name": "Order",
+        "description": "Start your order quickly",
+        "url": "/order?source=shortcut",
+        "icons": [
+          {
+            "src": "images/icons/order-icon.png",
+            "sizes": "96x96",
+            "type": "image/png"
+          }
+        ]
+      },
+      {
+        "name": "Exclusive Deals",
+        "short_name": "Deals",
+        "description": "View exclusive burger deals",
+        "url": "/deals?source=shortcut",
+        "icons": [
+          {
+            "src": "images/icons/deals-icon.png",
+            "sizes": "96x96",
+            "type": "image/png"
+          }
+        ]
+      }
+    ]
+  }
+  

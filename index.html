@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burgers4U - The Best Burgers in Town</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js?v=8" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Body styling */
+        body {
+            background-color: #333; /* Same color as the share button */
+            color: #fff; /* White text for contrast */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Optional styling for the popup at the bottom */
+        .swal2-bottom-popup {
+            width: 100%;      /* Make it full width */
+            margin: 0;        /* Remove default margin */
+            border-radius: 0; /* Remove border radius */
+        }
+
+        /* Content container styling */
+        .content-container {
+            max-width: 800px;
+            margin: 20px auto; /* Center the content container with margin */
+            padding: 20px;
+            background-color: #333; /* Same color as the menu */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            margin-left: 10px;  /* Add small margins on the sides */
+            margin-right: 10px;
+        }
+
+        /* Logo styling */
+        .logo {
+            width: 200px;
+            margin: 0px auto;
+        }
+
+        /* Bottom menu styling */
+        .bottom-menu {
+            display: flex;
+            justify-content: space-around;
+            background-color: #333;
+            padding: 15px 0; /* Increased padding for more height */
+            color: white;
+            font-size: 25px; /* Adjust font size for larger icons */
+            border-top: 1.5px solid white; /* White border */
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 500; /* Ensure it appears above other content, but below floating button */
+            align-items: center; /* Center the icons vertically */
+            height: 50px; /* Set a fixed height for the menu */
+        }
+
+        .bottom-menu i {
+            color: white;
+            cursor: pointer;
+            margin: 0; /* Remove any default margin */
+            line-height: 1; /* Ensure line-height is reset */
+        }
+
+        .bottom-menu i:hover {
+            color: #ffcc00; /* Change color on hover */
+        }
+        /* Deal images */
+        .deal-image {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto 0 auto; /* Center-align the images and add spacing above */
+            border-radius: 20px; /* Rounded corners */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid white; /* White border */
+        }
+
+        .deal-image + .deal-image {
+            margin-top: 20px; /* Ensure spacing between deal images */
+        }
+
+        /* Funky share button */
+        .share-button {
+            background-color: #ffcc00;
+            color: #333;
+            padding: 15px 25px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 20px; /* Added margin-top to ensure spacing */
+            display: block; /* Make sure the button is centered */
+            margin-left: auto;
+            margin-right: auto;
+        }
+       
+        /* Floating circular image button */
+        .floating-button {
+            position: fixed;
+            top: 20px; /* Distance from the top */
+            right: 20px; /* Distance from the right */
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #333; /* Background color of the button */
+            border: 4px solid white; /* White border with 4px thickness */
+            cursor: pointer;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0; /* Remove padding to avoid spacing around the image */
+            z-index: 1000; /* Ensure it appears above the menu */
+        }
+
+
+        /* Floating button image styling */
+        .floating-button img {
+            width: 80%; /* Adjust the size of the image to fit inside the button */
+            height: 80%;
+            border-radius: 50%; /* Ensure the image is circular */
+        }
+
+        /* Footer styling */
+        footer {
+            background-color: #333; /* Same color as the content-container */
+            color: #ccc;
+            padding: 10px 0;
+            margin-top: 30px;
+            font-size: 14px;
+            border-radius: 8px; /* Rounded corners to match content container */
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        /* White border around dynamic image */
+        #dynamic-content img {
+            border: 2px solid white; /* White border */
+            border-radius: 8px; /* Rounded corners */
+        }
+
+         /* CSS to make the paragraph text slightly bigger */
+         .large-text {
+            font-size: 1.2em; /* Adjust as needed for desired size */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Content container -->
+    <div class="content-container">
+
+        <!-- Logo -->
+        <img src="Burgers4ULogo.png" alt="Burgers4U Logo" class="logo">
+
+        <!-- Mobile-friendly menu -->
+        <h2>Welcome to Burgers4U</h2>
+        <p class="large-text">Your one-stop destination for mouthwatering burgers! 😉🍔</p>
+        
+        <!-- Add to Home Screen Banner for iOS -->
+        <div id="ios-install-prompt" style="display:none;">
+            <p>To get your FREE burger, install our web app by tapping <img src="iPhoneShare.png" alt="Share Icon" class="share-icon"> and find/click "Add to Home Screen" button. Then, open the app from your home screen and sign up when prompted.</p>
+        </div>
+
+        <!-- Dynamic Image -->
+        <div id="dynamic-content"></div>       
+
+        <!-- Funky share button -->
+        <!-- <button class="share-button" onclick="sharePage()">Share the Love 🥰🍔</button> -->
+
+        <img src="https://files.sbsdev.co/Burgers4U_QR.png" alt="New Deal Image" class="deal-image" onclick="sharePage()">
+
+        <!-- Footer with dynamic copyright -->
+        <footer>
+            <p>&copy; <span id="current-year"></span> Burgers4U. All rights reserved.</p>
+        </footer>
+
+    </div>
+
+    <!-- Floating circular image button -->
+    <button class="floating-button" onclick="openPreferences()">
+        <img src="images/icon/icon-72x72.png" alt="Preferences" class="floating-button-image">
+    </button>
+
+    <!-- Bottom menu -->
+    <div class="bottom-menu">
+        <i class="fa fa-home" title="Home" onclick="navigateToHome()"></i>
+        <!-- <i class="fa fa-wallet" title="Wallet" onclick="navigateToWallet()"></i> -->
+        <i class="fa fa-shopping-cart" title="Order" onclick="navigateToOrder()"></i>
+    </div>
+
+    <script>
+
+        let dynamicImage;
+        let dealImage1;
+        let dealImage2;
+
+        window.onload = function() {           
+
+            if (typeof createDynamicElement !== 'undefined') {
+                // Example usage for an image inside the dynamic content container
+                dynamicImage = createDynamicElement({
+                    type: 'image',
+                    location: '#dynamic-content',
+                    size: { width: '100%', height: 'auto' },
+                    imageUrl: 'FreeBurgerSignup.png',
+                    action: 'pwaInstallAndSubscribe',
+                    style: {
+                        marginTop: '20px',
+                        maxWidth: '600px',
+                        width: '100%',
+                        height: 'auto',
+                        animation: 'pulsate 1.5s infinite'
+                    }
+                });
+
+                // Add CSS animation for the pulsating effect
+                const style = document.createElement('style');
+                style.innerHTML = `
+                @keyframes pulsate {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.05); }
+                    100% { transform: scale(1); }
+                }
+                `;
+                document.head.appendChild(style);
+
+                dealImage1 = createDynamicElement({
+                    type: 'image',
+                    location: '#dynamic-content',
+                    size: { width: '100%', height: 'auto' },
+                    imageUrl: 'FreeFries.png',
+                    action: 'pwaPageRedirect',
+                    redirectUrl: 'index.html',
+                    style: {
+                        marginTop: '20px',
+                        maxWidth: '600px',
+                        width: '100%',
+                        height: 'auto'
+                    }
+                });
+
+                dealImage2 = createDynamicElement({
+                    type: 'image',
+                    location: '#dynamic-content',
+                    size: { width: '100%', height: 'auto' },
+                    imageUrl: 'FreeDrink.png',
+                    action: 'pwaPageRedirect',
+                    redirectUrl: 'index.html',
+                    style: {
+                        marginTop: '20px',
+                        maxWidth: '600px',
+                        width: '100%',
+                        height: 'auto'
+                    }
+                });
+
+            } else {
+                console.error('createDynamicElement function is not defined.');
+            }
+        
+            // Event listeners for app installation and push subscription
+            window.addEventListener('appInstalled', (e) => {
+                console.log('App installed event triggered:', e.detail.element);
+                updateImageIfInstalledAndSubscribed(window.isAppInstalled(), dynamicImage);
+            });
+
+            window.addEventListener('pushSubscribed', (e) => {
+                console.log('Push subscribed event triggered:', e.detail.element);
+                updateImageIfInstalledAndSubscribed(window.isAppInstalled(), dynamicImage);
+            });         
+
+            // Check if voucherRedeemed parameter is present
+            const urlParams = new URLSearchParams(window.location.search);
+            const voucherRedeemed = urlParams.get('voucherRedeemed');
+
+            if (voucherRedeemed === 'true') {
+                // Update dynamic image if voucherRedeemed is true
+                console.log('Voucher Redeemed: ', voucherRedeemed);
+                // Example usage for an image inside the dynamic content container
+                dynamicImage = createDynamicElement({
+                    type: 'image',
+                    location: '#dynamic-content',
+                    size: { width: '100%', height: 'auto' },
+                    imageUrl: 'FreeFries.png',
+                    action: 'pwaPageRedirect',
+                    redirectUrl: 'index.html',
+                    style: {
+                        marginTop: '20px',
+                        maxWidth: '600px',
+                        width: '100%',
+                        height: 'auto'
+                    }
+                });
+                console.log(dynamicImage);
+            } else {
+                updateImageIfInstalledAndSubscribed(window.isAppInstalled(), dynamicImage);
+            }
+            // Update the copyright year dynamically
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+        };
+
+        function updateImageIfInstalledAndSubscribed(isAppInstalled, dynamicImage) {
+            window.isPushSubscribed().then(isSubscribed => {
+                console.log('Is subscribed to push:', isSubscribed);
+                if (isAppInstalled && isSubscribed) {
+                    dynamicImage.dataset.action = 'pwaPageRedirect';
+                    dynamicImage.dataset.redirectUrl = 'order.html?voucher=XCFG145V';
+                    dynamicImage.src = 'FreeBurgerRedeem.png';
+                    dynamicImage.style.display = 'block';
+                }
+            }).catch(error => {
+                console.error('Failed to check push subscription:', error);
+            });
+        }
+
+        // Function to share the page
+        async function sharePage() {
+            if (navigator.share) {
+                const imageUrl = 'FreeBurgerSignup.png';
+                const imageBlob = await fetch(imageUrl).then(r => r.blob());
+
+                navigator.share({
+                    title: 'Burgers4U - The Best Burgers in Town',
+                    text: 'Check out the FREE Burger deal from Burgers4U! 🥰🍔 Get yours at: ',
+                    url: 'https://burgers4U.uk', // This URL is clickable when shared as a webpage
+                    files: [new File([imageBlob], 'deal.png', { type: 'image/png' })]
+                }).then(() => {
+                    console.log('Page shared successfully!');
+                }).catch((error) => {
+                    console.error('Error sharing the page:', error);
+                });
+            } else {
+                alert('Sharing is not supported on your browser. Please copy the URL and share it manually.');
+            }
+        }
+
+        // Function to open preferences popup
+        function openPreferences() {
+            Swal.fire({
+                title: '<img src="Burgers4ULogo.png" alt="Burgers4U Logo" style="width: 100px; margin-bottom: 20px;"><br>Update Preferences',
+                html: `
+                    <label for="toggle1" style="color: #fff;">Receive Push Notifications Deals:</label>
+                    <input type="checkbox" id="toggle1" checked>
+                    <br><br>
+                    <label for="toggle2" style="color: #fff;">Receive Geolocation Deals:</label>
+                    <input type="checkbox" id="toggle2">
+                `,
+                confirmButtonText: 'Save Preferences',
+                showCancelButton: true,
+                background: '#333',  // Dark background to match the page
+                color: '#fff',        // White text for contrast
+                confirmButtonColor: '#ffcc00',  // Match the share button color
+                cancelButtonColor: '#ff6600',   // Match the floating button color
+                customClass: {
+                    confirmButton: 'swal-confirm-button',
+                    cancelButton: 'swal-cancel-button'
+                },               
+                imageWidth: 100,
+                imageHeight: 100,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Preferences Saved!',
+                        text: '',
+                        icon: 'success',
+                        background: '#333',  // Dark background to match the page
+                        color: '#fff',        // White text for contrast
+                        confirmButtonColor: '#ffcc00',  // Match the share button color
+                        customClass: {
+                            confirmButton: 'swal-confirm-button'
+                        }
+                    });
+                }
+            });
+        }
+
+        // Custom CSS for SweetAlert buttons
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .swal-confirm-button {
+                background-color: #ffcc00 !important;
+                color: #000 !important; /* Black text */
+            }
+            .swal-cancel-button {
+                background-color: #ff6600 !important;
+                color: #000 !important; /* Black text */
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Navigation functions
+        function navigateToHome() {
+            window.location.href = 'index.html'; // Update this URL to your actual home page
+        }
+
+        function navigateToWallet() {
+            window.location.href = 'wallet.html'; // Update this URL to your wallet page
+        }
+
+        function navigateToOrder() {
+            window.location.href = 'order.html'; // Update this URL to your order page
+        }
+
+    </script>
+</body>
+</html>

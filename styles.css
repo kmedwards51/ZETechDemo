@@ -1,0 +1,108 @@
+/* Basic body styling with centered content */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+}
+
+/* Container for the content */
+.content-container {
+    max-width: 90%;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the iOS install prompt */
+#ios-install-prompt {
+    background-color: whitesmoke; /* A light yellow background to make it more noticeable */
+    color: #000000; /* Black text for contrast */
+    padding: 15px; /* Increase padding for better spacing */
+    position: fixed;
+    bottom: 10px; /* Adds some space from the bottom */
+    left: 10px; /* Adds some space from the left */
+    right: 10px; /* Adds some space from the right */
+    border: 1px solid black; /* A thicker, orange border to make it stand out */
+    border-radius: 10px; /* Slightly more rounded corners for a polished look */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Adds a shadow for depth */
+    text-align: center; /* Center-align the text */
+    font-weight: bold; /* Make the text bold */
+    z-index: 1000; /* Ensures it stays above other elements */
+}
+
+/* iOS install prompt text and icon */
+#ios-install-prompt p {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+/* Share icon for iOS prompt */
+.share-icon {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+}
+
+/* Button styles */
+#subscribe-button {
+    font-size: 1.5em;
+    padding: 15px 25px;
+    margin: 15px 0;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+}
+
+/* Button hover effect */
+#install-button:hover {
+    background-color: #0056b3;
+}
+
+/* Button styles */
+#install-button {
+    font-size: 1.5em;
+    padding: 15px 25px;
+    margin: 15px 0;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+}
+
+/* Button hover effect */
+#install-button:hover {
+    background-color: #0056b3;
+}
+
+/* Ensure the layout works well on mobile */
+@media (max-width: 600px) {
+    .content-container {
+        padding: 10px;
+    }
+    
+    #subscribe-button {
+        font-size: 1.2em;
+        padding: 12px 20px;
+    }
+
+    #ios-install-prompt p {
+        font-size: 1em;
+    }
+}

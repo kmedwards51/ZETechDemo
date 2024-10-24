@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burgers4U Order Page</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js?v=8" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Body and page layout */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            background-color: #333;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        /* Content container should grow to fill available space */
+        .content-container {
+            flex-grow: 1;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        /* Logo styling */
+        .logo {
+            width: 200px;
+            height: auto;
+            margin: 0px auto;
+            display: block;
+        }
+
+        /* Heading and paragraph styling */
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2em;
+        }
+       
+        /* Table styling */
+        table {
+            width: 95%; /* Make the table wider with 5% margins on each side */
+            max-width: 800px;
+            margin: 15px auto;
+            border-collapse: collapse;
+        }
+
+        /* Table header and cell styling */
+        table, th, td {
+            border: 2px solid #ddd; /* Border for the table */
+            padding: 10px; /* Small amount of padding */
+            text-align: center;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        .add-btn {
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            background-color: #2ecc71;
+        }
+
+        /* Floating button styling */
+        .floating-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #ffffff; /* Changed to a brighter color */
+            color: #333; /* Changed the color for better contrast */
+            border: none;
+            border-radius: 50%;
+            width: 70px; /* Increased the size */
+            height: 70px; /* Increased the size */
+            font-size: 25px; /* Increased font size for better visibility */
+            cursor: pointer;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5); /* Added more prominent shadow for visibility */
+            z-index: 1000;
+        }
+
+        /* Bottom menu styling */
+        .bottom-menu {
+            display: flex;
+            justify-content: space-around;
+            background-color: #333;
+            padding: 15px 0;
+            color: white;
+            font-size: 25px;
+            border-top: 1.5px solid white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 500;
+            align-items: center;
+            height: 50px;
+        }
+
+        .bottom-menu i {
+            color: white;
+            cursor: pointer;
+            margin: 0;
+            line-height: 1;
+        }
+
+        .bottom-menu i:hover {
+            color: #ffcc00;
+        }
+
+        /* Footer styling */
+        footer {
+            background-color: #333;
+            color: #ccc;
+            padding: 10px 0;
+            font-size: 14px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Content container -->
+    <div class="content-container">
+        <!-- Logo -->
+        <img src="Burgers4ULogo.png" alt="Burgers4U Logo" class="logo">
+
+        <!-- Mobile-friendly menu -->
+        <h2>Welcome to Burgers4U</h2>
+        <p>Your one-stop destination for mouthwatering burgers! 😉🍔</p>
+        <p>Add items to basket</p>
+        
+        <!-- Item Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Burger</th>
+                    <th>Price</th>
+                    <th>Add Item</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Classic Burger</td>
+                    <td><img src="Classic.png" alt="Classic Burger"></td>
+                    <td>£5.00</td>
+                    <td><button class="add-btn" onclick="addToBasket('Classic Burger', 5)">Add to Basket</button></td>
+                </tr>
+                <tr>
+                    <td>Cheese Burger</td>
+                    <td><img src="Cheese.png" alt="Cheese Burger"></td>
+                    <td>£6.00</td>
+                    <td><button class="add-btn" onclick="addToBasket('Cheese Burger', 6)">Add to Basket</button></td>
+                </tr>
+                <tr>
+                    <td>Bacon Burger</td>
+                    <td><img src="Bacon.png" alt="Bacon Burger"></td>
+                    <td>£7.00</td>
+                    <td><button class="add-btn" onclick="addToBasket('Bacon Burger', 7)">Add to Basket</button></td>
+                </tr>
+                <tr>
+                    <td>Veggie Burger</td>
+                    <td><img src="Vegi.png" alt="Veggie Burger"></td>
+                    <td>£6.50</td>
+                    <td><button class="add-btn" onclick="addToBasket('Veggie Burger', 6.5)">Add to Basket</button></td>
+                </tr>
+                <tr>
+                    <td>Chicken Burger</td>
+                    <td><img src="Chicken.png" alt="Chicken Burger"></td>
+                    <td>£6.00</td>
+                    <td><button class="add-btn" onclick="addToBasket('Chicken Burger', 6)">Add to Basket</button></td>
+                </tr>
+                <tr>
+                    <td>Fish Burger</td>
+                    <td><img src="Fish.png" alt="Fish Burger"></td>
+                    <td>£7.50</td>
+                    <td><button class="add-btn" onclick="addToBasket('Fish Burger', 7.5)">Add to Basket</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; <span id="current-year"></span> Burgers4U. All rights reserved.</p>
+        </footer>
+
+    </div>
+
+    <!-- Floating cart button -->
+    <button class="floating-button" onclick="reviewBasket()">🛒</button>
+
+    <!-- Bottom menu -->
+    <div class="bottom-menu">
+        <i class="fa fa-home" title="Home" onclick="navigateToHome()"></i>
+        <!-- <i class="fa fa-wallet" title="Wallet" onclick="navigateToWallet()"></i> -->
+        <i class="fa fa-shopping-cart" title="Order" onclick="navigateToOrder()"></i>
+    </div>
+
+    <script>
+        let basket = [];
+
+        // Function to add item to the basket
+        function addToBasket(item, price) {
+            basket.push({ item, price });
+            Swal.fire({
+                title: 'Added to basket!',
+                text: `${item} - £${price.toFixed(2)}`,
+                icon: 'success',
+                timer: 1000,
+                showConfirmButton: false
+            });
+        }
+
+        function reviewBasket() {
+            if (basket.length === 0) {
+                Swal.fire({
+                    title: 'Your basket is empty!',
+                    icon: 'info',
+                    showConfirmButton: true
+                });
+                return;
+            }
+
+            let basketItems = `
+                <table style="width: 100%; text-align: left; margin: auto; color: white; font-size: 0.70em;">  <!-- Smaller font size -->
+                    <thead>
+                        <tr>
+                            <th style="padding: 5px; width: 60%;">Item</th>  <!-- Reduce width of item column -->
+                            <th style="padding: 5px; width: 20%;">£</th>  <!-- Increase width of £ column -->
+                            <th style="padding: 5px; width: 20%;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+            let total = 0;
+
+            basket.forEach((b, index) => {
+                basketItems += `
+                    <tr>
+                        <td style="padding: 5px; width: 60%;">${b.item}</td>  <!-- Adjusted item column width -->
+                        <td style="padding: 5px; width: 20%;">£${b.price.toFixed(2)}</td>  <!-- Adjusted £ column width -->
+                        <td style="padding: 5px; width: 20%;">
+                            <button onclick="removeFromBasket(${index})" 
+                                    style="background-color: red; color: white; border: none; padding: 5px; cursor: pointer; font-size: 0.75em;">
+                                    Remove Item</button>
+                        </td>
+                    </tr>`;
+                total += b.price;
+            });
+
+            basketItems += `
+                    </tbody>
+                </table>
+                <br><strong>Total: £${total.toFixed(2)}</strong>`;
+
+            Swal.fire({
+                title: '<img src="Burgers4ULogo.png" alt="Burgers4U Logo" style="width: 100px; margin-bottom: 20px;"><br>Your Basket',
+                html: `<div>${basketItems}</div>`,
+                background: '#333',  // Same background as the page
+                color: '#fff',  // White text
+                showCancelButton: true,
+                confirmButtonText: 'Proceed to Payment',
+                cancelButtonText: 'Close',
+                preConfirm: () => {
+                    Swal.fire({
+                        title: 'Payment Successful',
+                        icon: 'success',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        basket = [];  // Clear the basket after payment
+                        executePostPaymentFunction();  // Execute a custom function after payment
+                    });
+                }
+            });
+        }
+
+        // Function to remove item from the basket
+        function removeFromBasket(index) {
+            basket.splice(index, 1); // Remove the item from the basket
+            reviewBasket(); // Refresh the basket view
+        }
+
+        // Function to execute after payment
+        function executePostPaymentFunction() {
+            console.log('Payment completed! Performing post-payment actions...');
+
+            // Check if a voucher parameter is present in the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const voucher = urlParams.get('voucher');
+
+            // Determine the URL for the push message based on whether the voucher exists
+            const pushMessageUrl = "/";
+
+            setTimeout(() => {
+                sendPushMessageToServiceWorker(
+                    "Order dispatched 🛵", 
+                    "Your delicious burger order is on it's way! Enjoy 🍔😋",
+                    "order.html"
+                );
+                if (voucher === 'XCFG145V') {
+                    // If the voucher is present, redirect with the voucherRedeemed parameter
+                    window.location.href = 'index.html?voucherRedeemed=true';
+                } else {
+                    // Otherwise, redirect to the standard index page
+                    window.location.href = 'index.html';
+                }
+            }, 1);  // 30 seconds in milliseconds
+        }
+       
+        // Function to handle the voucher code and auto-add item
+        function handleVoucherCode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const voucher = urlParams.get('voucher');
+            if (voucher === 'XCFG145V') {
+                // Automatically add the free burger to the basket, including the voucher code in the description
+                addToBasket(`Free Burger Deal (Voucher: ${voucher})`, 0);
+                // Immediately open the basket
+                reviewBasket();
+            }
+        }
+
+        // Call the function to handle the voucher code
+        handleVoucherCode();
+
+        // Update the year dynamically in the footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Navigation functions
+        function navigateToHome() {
+            window.location.href = 'index.html'; // Update this URL to your actual home page
+        }
+
+        function navigateToWallet() {
+            window.location.href = 'wallet.html'; // Update this URL to your wallet page
+        }
+
+        function navigateToOrder() {
+            window.location.href = 'order.html'; // Update this URL to your order page
+        }
+    </script>
+
+</body>
+</html>
