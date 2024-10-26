@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Body and page layout */
+        /* General styling */
         body {
             display: flex;
             flex-direction: column;
@@ -23,10 +23,10 @@
             text-align: center;
         }
 
-        /* Content container should grow to fill available space */
+        /* Content container */
         .content-container {
             flex-grow: 1;
-            max-width: 800px;
+            max-width: 90%;
             margin: 20px auto;
             padding: 20px;
             background-color: #333;
@@ -36,100 +36,80 @@
 
         /* Logo styling */
         .logo {
-            width: 200px;
+            width: 80%;
+            max-width: 200px;
             height: auto;
-            margin: 0px auto;
+            margin: 0 auto;
             display: block;
         }
 
-        /* Heading and paragraph styling */
+        /* Headings and paragraphs */
         h2 {
             margin-bottom: 10px;
+            font-size: 1.8em;
         }
 
         p {
-            font-size: 1.2em;
+            font-size: 1.1em;
+            margin: 0 5px;
         }
 
-        /* Table styling for wallet */
+        /* Table styling */
         table {
-            width: 95%;
-            max-width: 800px;
+            width: 100%;
             margin: 15px auto;
             border-collapse: collapse;
-            background-color: #f4deb3; /* Sandy wallet-like color */
+            background-color: #f4deb3;
             border-radius: 12px;
-            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* 2D appearance with shadow */
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
         }
 
-        /* Table header and cell styling */
-        table, th, td {
-            border: 0;
-            padding: 12px 15px;
+        th, td {
+            padding: 12px 10px;
             text-align: left;
-            color: #333; /* Dark text on the sandy wallet background */
+            color: #333;
+            font-size: 0.9em;
+            word-wrap: break-word;
         }
 
         th {
-            text-align: center;
-            font-size: 1.1em;
+            font-size: 1em;
             color: #000;
         }
 
-        td {
-            font-size: 0.9em;
-        }
-
         img {
-            width: 120px; /* Increased image size */
-            height: 120px; /* Increased image size */
+            width: 90px;
+            height: 90px;
             object-fit: cover;
             border-radius: 8px;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Adds 2D look */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-        /* Multi-line deal name styling */
-        .deal-name {
-            white-space: normal;
-            font-size: 1em;
-            font-weight: bold;
-        }
-
-        /* Expiry date styling */
-        .expiry-date {
-            font-size: 0.8em;
-            color: #555;
-            white-space: nowrap;
-        }
-
-        .remove-btn {
-            background-color: red;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
+        /* Button styling */
+        .sort-btn, .remove-btn {
             font-size: 0.9em;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            color: #fff;
         }
 
-        .remove-btn:hover {
-            background-color: #e74c3c;
-        }
-
-        /* Single sort button styling */
         .sort-btn {
             background-color: #3498db;
-            color: white;
-            padding: 8px;
-            margin: 10px;
-            cursor: pointer;
-            border: none;
-            font-size: 0.8em; /* Smaller text size */
-            border-radius: 5px;
+            margin-bottom: 10px;
         }
 
         .sort-btn:hover {
             background-color: #2980b9;
+        }
+
+        .remove-btn {
+            background-color: red;
+        }
+
+        .remove-btn:hover {
+            background-color: #e74c3c;
         }
 
         /* Bottom menu styling */
@@ -137,23 +117,20 @@
             display: flex;
             justify-content: space-around;
             background-color: #333;
-            padding: 15px 0;
+            padding: 10px 0;
             color: white;
-            font-size: 25px;
-            border-top: 1.5px solid white;
+            font-size: 22px;
             position: fixed;
             bottom: 0;
             width: 100%;
             z-index: 500;
             align-items: center;
-            height: 50px;
+            height: 60px;
         }
 
         .bottom-menu i {
             color: white;
             cursor: pointer;
-            margin: 0;
-            line-height: 1;
         }
 
         .bottom-menu i:hover {
@@ -169,6 +146,33 @@
             border-radius: 8px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            margin-top: auto;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .sort-btn, .remove-btn {
+                font-size: 0.8em;
+                padding: 6px 10px;
+            }
+
+            th, td {
+                font-size: 0.8em;
+            }
+
+            img {
+                width: 70px;
+                height: 70px;
+            }
+
+            .bottom-menu {
+                font-size: 18px;
+                height: 50px;
+            }
         }
     </style>
 </head>
@@ -179,7 +183,7 @@
         <!-- Logo -->
         <img src="Burgers4ULogo.png" alt="Burgers4U Logo" class="logo">
 
-        <!-- Mobile-friendly menu -->
+        <!-- Main Content -->
         <h2>Your Deals</h2>
         <p>Check out the latest deals and remove the ones you no longer need! 😊🎉</p>
         <button class="sort-btn" onclick="sortDeals()">Sort by Expiry Date</button>
@@ -203,13 +207,12 @@
         <footer>
             <p>&copy; <span id="current-year"></span> Burgers4U. All rights reserved.</p>
         </footer>
-
     </div>
 
     <!-- Bottom menu -->
     <div class="bottom-menu">
         <i class="fa fa-home" title="Home" onclick="navigateToHome()"></i>
-        <i class="fa fa-wallet" title="Wallet" onclick="navigateToWallet()"></i>
+        <i class="fa fa-coins" title="Deals" onclick="navigateToWallet()"></i>
         <i class="fa fa-shopping-cart" title="Order" onclick="navigateToOrder()"></i>
     </div>
 
@@ -220,9 +223,8 @@
             { id: 3, name: "Free Drink with Meal", expiry: "2024-12-01", image: "FreeDrink.png" }
         ];
 
-        let sortOrder = 'asc'; // Track current sort order
+        let sortOrder = 'asc';
 
-        // Function to remove deal from table
         function removeDeal(dealId) {
             Swal.fire({
                 title: 'Are you sure?',
@@ -234,64 +236,45 @@
                 cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Remove the deal
                     deals = deals.filter(deal => deal.id !== dealId);
                     Swal.fire('Removed!', 'The deal has been removed from your wallet.', 'success');
-                    renderDeals(); // Refresh the deals list
+                    renderDeals();
                 }
             });
         }
 
-        // Function to render deals in the table
         function renderDeals() {
             const tbody = document.querySelector("#deal-table tbody");
-            tbody.innerHTML = ""; // Clear previous deals
-
+            tbody.innerHTML = "";
             deals.forEach(deal => {
                 tbody.innerHTML += `
                     <tr>
                         <td class="deal-name">${deal.name}</td>
                         <td><img src="${deal.image}" alt="${deal.name}" /></td>
                         <td class="expiry-date">${deal.expiry}</td>
-                        <td>
-                            <button class="remove-btn" onclick="removeDeal(${deal.id})">Remove</button>
-                        </td>
+                        <td><button class="remove-btn" onclick="removeDeal(${deal.id})">Remove</button></td>
                     </tr>
                 `;
             });
         }
 
-        // Function to sort deals by expiry date
         function sortDeals() {
             if (sortOrder === 'asc') {
                 deals.sort((a, b) => new Date(a.expiry) - new Date(b.expiry));
-                sortOrder = 'desc'; // Toggle to descending
+                sortOrder = 'desc';
             } else {
                 deals.sort((a, b) => new Date(b.expiry) - new Date(a.expiry));
-                sortOrder = 'asc'; // Toggle to ascending
+                sortOrder = 'asc';
             }
-            renderDeals(); // Re-render the deals after sorting
+            renderDeals();
         }
 
-        // Update the year dynamically in the footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        // Call the function to render the deals
         renderDeals();
 
-        // Navigation functions
-        function navigateToHome() {
-            window.location.href = 'index.html'; // Update this URL to your actual home page
-        }
-
-        function navigateToWallet() {
-            window.location.href = 'wallet.html'; // Update this URL to your wallet page
-        }
-
-        function navigateToOrder() {
-            window.location.href = 'order.html'; // Update this URL to your order page
-        }
+        function navigateToHome() { window.location.href = 'index.html'; }
+        function navigateToWallet() { window.location.href = 'deals.html'; }
+        function navigateToOrder() { window.location.href = 'order.html'; }
     </script>
-
 </body>
 </html>
